@@ -1,8 +1,11 @@
 import sys 
+import requests
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, 
     QTextEdit, QPushButton, QTableWidget, QTableWidgetItem, QLabel
 )
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -30,9 +33,63 @@ class MainWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        pintor1 =  QPushButton("Pintor 1", self)
-        pintor2 =  QPushButton("Pintor 2", self)
-        pintor3 =  QPushButton("Pintor 3", self)
+        pintor1= QWidget()
+        pintor1_layout = QVBoxLayout()
+        pintor1_nombre = QLabel("Sidney Nolan")
+        pintor1_nombre.setAlignment(Qt.AlignCenter)
+        pintor1_img = QLabel()
+        pintor1_img.resize(200,250)
+        pintor1_img.setFixedSize(200,250)
+        # image_url = "https://www.artst.org/wp-content/uploads/2022/04/Sidney-Nolan-768x530.jpg"
+        # img_data = requests.get(image_url).content
+        # pixmap = QPixmap()
+        # pixmap.loadFromData(img_data)
+        # pintor1_img.setPixmap(pixmap)
+        # pintor1_img.setScaledContents(True)
+        pintor1_button = QPushButton("Ver pinturas")
+        pintor1_layout.addWidget(pintor1_nombre)
+        pintor1_layout.addWidget(pintor1_img)
+        pintor1_layout.addWidget(pintor1_button)
+        pintor1.setLayout(pintor1_layout)
+        
+        pintor2= QWidget()
+        pintor2_layout = QVBoxLayout()
+        pintor2_nombre = QLabel("Sidney Nolan")
+        pintor2_nombre.setAlignment(Qt.AlignCenter)
+        pintor2_img = QLabel()
+        pintor2_img.resize(200,250)
+        pintor2_img.setFixedSize(200,250)
+        # image_url = "https://www.artst.org/wp-content/uploads/2022/04/Tom-Roberts.jpg"
+        # img_data = requests.get(image_url).content
+        # pixmap = QPixmap()
+        # pixmap.loadFromData(img_data)
+        # pintor2_img.setPixmap(pixmap)
+        # pintor2_img.setScaledContents(True)
+        pintor2_button = QPushButton("Ver pinturas")
+        pintor2_layout.addWidget(pintor2_nombre)
+        pintor2_layout.addWidget(pintor2_img)
+        pintor2_layout.addWidget(pintor2_button)
+        pintor2.setLayout(pintor2_layout)
+
+        pintor3= QWidget()
+        pintor3_layout = QVBoxLayout()
+        pintor3_nombre = QLabel("Albert Namatjira")
+        pintor3_nombre.setAlignment(Qt.AlignCenter)
+        pintor3_img = QLabel()
+        pintor3_img.resize(200,250)
+        pintor3_img.setFixedSize(200,250)
+        # image_url = "https://www.artst.org/wp-content/uploads/2022/04/Tom-Roberts.jpg"
+        # img_data = requests.get(image_url).content
+        # pixmap = QPixmap()
+        # pixmap.loadFromData(img_data)
+        # pintor3_img.setPixmap(pixmap)
+        # pintor3_img.setScaledContents(True)
+        pintor3_button = QPushButton("Ver pinturas")
+        pintor3_layout.addWidget(pintor3_nombre)
+        pintor3_layout.addWidget(pintor3_img)
+        pintor3_layout.addWidget(pintor3_button)
+        pintor3.setLayout(pintor3_layout)
+  
 
         hbox = QHBoxLayout()
         hbox.addWidget(pintor1)
