@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
         pintor2_layout = QVBoxLayout()  # Diseño vertical
         pintor2_nombre = QLabel("Sidney Nolan")  # Nombre del pintor (error en el código original)
         pintor2_nombre.setAlignment(Qt.AlignCenter)  # Centrar el texto
-        pintor1_nombre.setStyleSheet("color: white; background-color: darkblue;")
+        pintor1_nombre.setStyleSheet("color: white; background-color: no;")
 
         pintor2_img = QLabel()  # Etiqueta para la imagen
         pintor2_img.resize(200, 250)  # Tamaño de la imagen

@@ -56,17 +56,40 @@ root.geometry("700x500+{}+{}".format((root.winfo_screenwidth() - 700) // 2, (roo
 root.config(bg="lightgreen")
 
 # Botones
-btn1 = tk.Button(root, text="Abrir Ventana 1", command=lambda: abrir_ventana("Sidney Nolan","https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"))
-btn1.pack(pady=10)
+btn1 = tk.Button(root, 
+                 text="Abrir Ventana 1", 
+                 command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"),
+                 bg="white",   
+                 fg="black",   
+                 font=("Arial", 12, "bold")) 
+btn1.pack(pady=10) 
+#btn1.place(x=100, y=50) 
+btn2 = tk.Button(root, 
+                 text="Abrir Ventana 2", 
+                 command=lambda: abrir_ventana("Tom Roberts", "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg"),
+                 bg="white",   
+                 fg="black",   
+                 font=("Arial", 12, "bold")) 
+btn2.pack(pady=10) 
+#btn2.place(x=300, y=50)
+btn3 = tk.Button(root, 
+                 text="Abrir Ventana 3", 
+                 command=lambda: abrir_ventana("Albert Namatjira", "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"),
+                 bg="white",   
+                 fg="black",   
+                 font=("Arial", 12, "bold")) 
+btn3.pack(pady=10) 
+#btn3.place(x=500, y=50)
 
-btn2 = tk.Button(root, text="Abrir Ventana 2", command=lambda: abrir_ventana("Tom Roberts","https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg"))
-btn2.pack(pady=10)
+btn_exit = tk.Button(root, 
+                     text="Salir", 
+                     command=lambda: confirmar_salida(),
+                     bg="white",   
+                     fg="black",   
+                     font=("Arial", 12, "bold")) 
+btn_exit.pack(pady=10) 
+#btn_exit.place(x=300, y=120)
 
-btn3 = tk.Button(root, text="Abrir Ventana 3", command=lambda: abrir_ventana("Albert Namatjira","https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"))
-btn3.pack(pady=10)
-
-btn_exit = tk.Button(root, text="Salir", command=lambda: confirmar_salida())
-btn_exit.pack(pady=10)
 
 root.mainloop()
 
