@@ -1,8 +1,8 @@
-import requests
-from PIL import Image, ImageTk
-from io import BytesIO
-import tkinter as tk
-from tkinter import Toplevel 
+import requests #Libreria para hacer peticiones a una URL
+from PIL import Image, ImageTk #Libreria para trabajar con imagenes
+from io import BytesIO #Libreria para trabajar con imagenes usando la data obtenida
+import tkinter as tk #Libreria para trabajar con la interfaz grafica
+from tkinter import Toplevel #Libreria para trabajar con ventanas emergentes, las coloca en el nivel superior
 
 # Función para obtener una imagen desde una URL
 def get_image(url): 
