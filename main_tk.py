@@ -62,8 +62,10 @@ def cerrar_ventana(ventana):
 def verificar_pintores_vistos():
     if len(pintores_vistos) == 3:
         btn_exit.config(state="normal")  # Habilitar botón de salida
+        root.protocol("WM_DELETE_WINDOW", root.destroy)
     else:
         btn_exit.config(state="disabled", text="Salir")
+        root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # Función para confirmar la salida de la aplicación
 def confirmar_salida():
