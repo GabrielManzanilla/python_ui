@@ -81,7 +81,9 @@ def confirmar_salida():
 
 # Ventana principal
 root = tk.Tk()
+
 root.title("7SA_Equipo#2_Gamboa_Manzanilla_Pérez_Pérez")
+root.resizable(width=False, height=False)
 root.geometry("700x500+{}+{}".format(
     (root.winfo_screenwidth() - 700) // 2, (root.winfo_screenheight() - 500) // 2))
 root.config(bg="lightgreen")
@@ -90,6 +92,7 @@ def on_closing():
     messagebox.showinfo("Información", "El botón de cerrar está deshabilitado.")
 
 root.protocol("WM_DELETE_WINDOW", on_closing)
+
 
 # Botones para los pintores
 btn1 = tk.Button(root, text="Sidney Nolan", command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"), bg="white", fg="black", font=("Arial", 12, "bold")) 
