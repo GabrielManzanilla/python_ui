@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import Toplevel, messagebox
 
 # Función para obtener una imagen desde una URL
-def get_image(url): 
+def get_image(url):
     response = requests.get(url)
     if response.status_code == 200:
         img = Image.open(BytesIO(response.content))
@@ -27,7 +27,7 @@ def abrir_ventana(nombre_pintor, img_url):
 
     if ventana_abierta:
         ventana_abierta.destroy()
-        
+
     ventana_abierta = Toplevel(root)
     ventana_abierta.title(nombre_pintor)
 
@@ -47,7 +47,7 @@ def abrir_ventana(nombre_pintor, img_url):
     # Posicionar la ventana en la esquina inferior derecha
     ventana_abierta.geometry("500x700+{}+{}".format(
         root.winfo_screenwidth() - 520, root.winfo_screenheight() - 720))
-    
+
     # Verificar si ya se han visto todos los pintores
     verificar_pintores_vistos()
 
@@ -78,10 +78,18 @@ def confirmar_salida():
     boton_volver.pack(pady=10)
     boton_cerrar = tk.Button(ventana_salida, text="Cerrar", command=root.destroy)
     boton_cerrar.pack(pady=10)
-
+def insert_button(type_button, value, nombre_pintor, img_url):
+    if type_button == "button":
+        return tk.Button(root, text=nombre_pintor, command=lambda: abrir_ventana(nombre_pintor, img_url), bg="white", fg="black", font=("Arial", 12, "bold"))
+    elif type_button == "check":
+        check_var = option_vars[value - 1]  # Usar la variable correspondiente
+        return tk.Checkbutton(root, text=nombre_pintor, variable=check_var, command=lambda: abrir_ventana(nombre_pintor, img_url), bg="white", fg="black", font=("Arial", 12, "bold"))
+    elif type_button == "radio":
+        return tk.Radiobutton(root, text=nombre_pintor, variable=selected_option, value=value, command=lambda: abrir_ventana(nombre_pintor, img_url), bg="white", fg="black", font=("Arial", 12, "bold"))
+    
 # Ventana principal
-root = tk.Tk()
 
+root = tk.Tk()
 root.title("7SA_Equipo#2_Gamboa_Manzanilla_Pérez_Pérez")
 root.resizable(width=False, height=False)
 root.geometry("700x500+{}+{}".format(
@@ -94,19 +102,43 @@ def on_closing():
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
 
-# Botones para los pintores
-btn1 = tk.Button(root, text="Sidney Nolan", command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"), bg="white", fg="black", font=("Arial", 12, "bold")) 
-btn1.pack(pady=10) 
-#btn1.place(x=100, y=50) 
-btn2 = tk.Button(root, text="Tom Roberts", command=lambda: abrir_ventana("Tom Roberts", "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg"), bg="white", fg="black", font=("Arial", 12, "bold")) 
-btn2.pack(pady=10) 
+# The code snippet you provided is setting the `mode` variable to `"check"`, which indicates the mode
+# of the buttons to be created.
+mode = "check" #modo de los botones
+if mode == "check":
+    option_vars = [tk.IntVar() for _ in range(3)]  
+elif mode == "radio":
+    selected_option = tk.IntVar()
+
+
+# The commented code block you provided is a loop that iterates over a list of painters' names
+# ("Sidney Nolan", "Tom Roberts", "Albert Namatjira") using the `enumerate` function with a starting
+# index of 1.
+# for i, pintor in enumerate(["Sidney Nolan", "Tom Roberts", "Albert Namatjira"], start=1):
+#     img_url = [
+#         "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg",
+#         "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg",
+#         "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"
+#     ][i - 1]  # URL de la imagen correspondiente
+
+#     btn = insert_button(mode, i, pintor, img_url)
+#     if btn is not None:  # Asegurarse de que el botón no sea None
+#         btn.pack(pady=10)  # Empaquetar el botón
+#     else:
+#         print(f"Error: No se pudo crear el botón para {pintor}")
+
+btn1 = tk.Button(root, text="Sidney Nolan", command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
+btn1.pack(pady=10)
+#btn1.place(x=100, y=50)
+btn2 = tk.Button(root, text="Tom Roberts", command=lambda: abrir_ventana(), bg="white", fg="black", font=("Arial", 12, "bold"))
+btn2.pack(pady=10)
 #btn2.place(x=300, y=50)
-btn3 = tk.Button(root, text="Albert Namatjira", command=lambda: abrir_ventana("Albert Namatjira", "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"), bg="white", fg="black", font=("Arial", 12, "bold")) 
-btn3.pack(pady=10) 
+btn3 = tk.Button(root, text="Albert Namatjira", command=lambda: abrir_ventana(), bg="white", fg="black", font=("Arial", 12, "bold"))
+btn3.pack(pady=10)
 #btn3.place(x=500, y=50)
 
 # Botón de salida, inicialmente deshabilitado
-btn_exit = tk.Button(root, text="Salir", command=confirmar_salida, state="disabled", bg="white", fg="black", font=("Arial", 12, "bold")) 
+btn_exit = tk.Button(root, text="Salir", command=confirmar_salida, state="disabled", bg="white", fg="black", font=("Arial", 12, "bold"))
 btn_exit.pack(pady=10)
 #btn_exit.place(x=300, y=120)
 
