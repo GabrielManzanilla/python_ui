@@ -1,46 +1,47 @@
-import requests
-from PIL import Image, ImageTk
-from io import BytesIO
-import tkinter as tk
-from tkinter import Toplevel, messagebox
+import requests  # Importa la biblioteca para realizar solicitudes HTTP
+from PIL import Image, ImageTk  # Importa para manejar imágenes
+from io import BytesIO  # Importa para manejar flujos de bytes
+import tkinter as tk  # Importa la biblioteca Tkinter para crear la interfaz gráfica
+from tkinter import Toplevel, messagebox  # Importa clases para ventanas adicionales y cuadros de mensaje
 
 # Función para obtener una imagen desde una URL
 def get_image(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        img = Image.open(BytesIO(response.content))
-        return img
+    response = requests.get(url)  # Realiza una solicitud GET a la URL
+    if response.status_code == 200:  # Si la respuesta es exitosa
+        img = Image.open(BytesIO(response.content))  # Abre la imagen desde el contenido de bytes
+        return img  # Devuelve la imagen
     else:
-        return None
+        return None  # Devuelve None si la solicitud falló
 
 # Variables globales para controlar el estado
 pintores_vistos = set()  # Conjunto para registrar pintores vistos
-ventana_abierta = None
+ventana_abierta = None  # Variable para rastrear si hay una ventana abierta
 
 # Función para abrir una ventana con la imagen de un pintor
 def abrir_ventana(nombre_pintor, img_url):
     global ventana_abierta, pintores_vistos
 
-    # Incrementa al abrir una ventana de un pintor nuevo
+    # Incrementa el conjunto si se abre una ventana de un pintor nuevo
     if nombre_pintor not in pintores_vistos:
         pintores_vistos.add(nombre_pintor)
 
-    if ventana_abierta:
+    if ventana_abierta:  # Si ya hay una ventana abierta, la cierra
         ventana_abierta.destroy()
 
-    ventana_abierta = Toplevel(root)
-    ventana_abierta.title(nombre_pintor)
+    ventana_abierta = Toplevel(root)  # Crea una nueva ventana
+    ventana_abierta.title(nombre_pintor)  # Establece el título de la ventana
 
     # Etiqueta con el nombre del pintor y la imagen
     label = tk.Label(ventana_abierta, text=f"Pintura del pintor {nombre_pintor}", font=("Arial", 20))
-    label.pack(padx=20, pady=20)
+    label.pack(padx=20, pady=20)  # Agrega la etiqueta a la ventana
 
-    img_get = get_image(img_url)
-    img = img_get.resize((400, 600))
-    img_tk = ImageTk.PhotoImage(img)
-    label.config(image=img_tk)
-    label.image_ = img_tk
+    img_get = get_image(img_url)  # Obtiene la imagen desde la URL
+    img = img_get.resize((400, 600))  # Redimensiona la imagen
+    img_tk = ImageTk.PhotoImage(img)  # Convierte la imagen a un formato que Tkinter puede usar
+    label.config(image=img_tk)  # Configura la etiqueta para mostrar la imagen
+    label.image_ = img_tk  # Previene la recolección de basura de la imagen
 
+    # Botón para cerrar la ventana
     boton_cerrar = tk.Button(ventana_abierta, text="Cerrar", command=lambda: cerrar_ventana(ventana_abierta))
     boton_cerrar.pack(pady=10)
 
@@ -48,74 +49,70 @@ def abrir_ventana(nombre_pintor, img_url):
     ventana_abierta.geometry("500x700+{}+{}".format(
         root.winfo_screenwidth() - 520, root.winfo_screenheight() - 720))
 
-    # Verificar si ya se han visto todos los pintores
+    # Verificar si se han visto todos los pintores
     verificar_pintores_vistos()
 
+# Función para cerrar la ventana
 def cerrar_ventana(ventana):
-    ventana.destroy()
+    ventana.destroy()  # Cierra la ventana
     global ventana_abierta
-    ventana_abierta = None
-    # Actualizar el estado del botón "Salir" en cada cierre
+    ventana_abierta = None  # Reinicia la variable de la ventana abierta
+    # Actualiza el estado del botón "Salir" al cerrar
     verificar_pintores_vistos()
 
 # Función para verificar el conteo de pintores vistos
 def verificar_pintores_vistos():
-    if len(pintores_vistos) == 3:
-        btn_exit.config(state="normal")  # Habilitar botón de salida
-        root.protocol("WM_DELETE_WINDOW", root.destroy)
+    if len(pintores_vistos) == 3:  # Si se han visto tres pintores
+        btn_exit.config(state="normal")  # Habilita el botón de salida
+        root.protocol("WM_DELETE_WINDOW", root.destroy)  # Permite cerrar la ventana
     else:
-        btn_exit.config(state="disabled", text="Salir")
-        root.protocol("WM_DELETE_WINDOW", on_closing)
+        btn_exit.config(state="disabled", text="Salir")  # Deshabilita el botón
+        root.protocol("WM_DELETE_WINDOW", on_closing)  # Muestra un mensaje al intentar cerrar
 
 # Función para confirmar la salida de la aplicación
 def confirmar_salida():
-    ventana_salida = Toplevel(root)
+    ventana_salida = Toplevel(root)  # Crea una ventana para la confirmación
     ventana_salida.title("¿Desea salir?")
     label = tk.Label(ventana_salida, text="¿Estás seguro que deseas salir?", font=("Arial", 20))
-    label.pack(pady=10)
+    label.pack(pady=10)  # Agrega la etiqueta a la ventana
 
     boton_volver = tk.Button(ventana_salida, text="Cancelar", command=ventana_salida.destroy)
-    boton_volver.pack(pady=10)
+    boton_volver.pack(pady=10)  # Botón para cancelar
     boton_cerrar = tk.Button(ventana_salida, text="Cerrar", command=root.destroy)
-    boton_cerrar.pack(pady=10)
+    boton_cerrar.pack(pady=10)  # Botón para cerrar la aplicación
+
+# Función para insertar botones o checkboxes/radiobuttons
 def insert_button(type_button, value, nombre_pintor, img_url):
-    if type_button == "button":
+    if type_button == "button":  # Si el tipo es botón
         return tk.Button(root, text=nombre_pintor, command=lambda: abrir_ventana(nombre_pintor, img_url), bg="white", fg="black", font=("Arial", 12, "bold"))
-    elif type_button == "check":
-        check_var = option_vars[value - 1]  # Usar la variable correspondiente
+    elif type_button == "check":  # Si el tipo es checkbox
+        check_var = option_vars[value - 1]  # Usa la variable correspondiente
         return tk.Checkbutton(root, text=nombre_pintor, variable=check_var, command=lambda: abrir_ventana(nombre_pintor, img_url), bg="white", fg="black", font=("Arial", 12, "bold"))
-    elif type_button == "radio":
+    elif type_button == "radio":  # Si el tipo es radiobutton
         return tk.Radiobutton(root, text=nombre_pintor, variable=selected_option, value=value, command=lambda: abrir_ventana(nombre_pintor, img_url), bg="white", fg="black", font=("Arial", 12, "bold"))
-    
+
 # Ventana principal
-
-root = tk.Tk()
-root.title("7SA_Equipo#2_Gamboa_Manzanilla_Pérez_Pérez")
-# root.maxsize(700, 500)
-# root.minsize(700, 500)
-root.resizable(width=False, height=False)
+root = tk.Tk()  # Crea la ventana principal
+root.title("7SA_Equipo#2_Gamboa_Manzanilla_Pérez_Pérez")  # Establece el título
+root.resizable(width=False, height=False)  # Deshabilita el redimensionamiento
 root.geometry("700x500+{}+{}".format(
-    (root.winfo_screenwidth() - 700) // 2, (root.winfo_screenheight() - 500) // 2))
-root.config(bg="lightgreen")
+    (root.winfo_screenwidth() - 700) // 2, (root.winfo_screenheight() - 500) // 2))  # Centra la ventana
+root.config(bg="lightgreen")  # Establece el color de fondo
+
+# Función para manejar el cierre de la ventana
 def on_closing():
-    # Muestra un mensaje cuando intentan cerrar la ventana
-    messagebox.showinfo("Información", "El botón de cerrar está deshabilitado.")
+    messagebox.showinfo("Información", "El botón de cerrar está deshabilitado.")  # Mensaje informativo
 
-root.protocol("WM_DELETE_WINDOW", on_closing)
+root.protocol("WM_DELETE_WINDOW", on_closing)  # Configura la acción al intentar cerrar
 
-
-# The code snippet you provided is setting the `mode` variable to `"check"`, which indicates the mode
-# of the buttons to be created.
-mode = "radio" #modo de los botones
-if mode == "check":
+# Modo de los botones
+mode = "button"  # Modo de los botones
+if mode == "check":  # Si el modo es checkbox
     option_vars = [tk.IntVar() for _ in range(3)]  
-elif mode == "radio":
+elif mode == "radio":  # Si el modo es radiobutton
     selected_option = tk.IntVar()
 
-
-# The commented code block you provided is a loop that iterates over a list of painters' names
-# ("Sidney Nolan", "Tom Roberts", "Albert Namatjira") using the `enumerate` function with a starting
-# index of 1.
+# Lista de pintores y sus URLs de imagen
 for i, pintor in enumerate(["Sidney Nolan", "Tom Roberts", "Albert Namatjira"], start=1):
     img_url = [
         "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg",
@@ -123,25 +120,14 @@ for i, pintor in enumerate(["Sidney Nolan", "Tom Roberts", "Albert Namatjira"], 
         "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"
     ][i - 1]  # URL de la imagen correspondiente
 
-    btn = insert_button(mode, i, pintor, img_url)
-    if btn is not None:  # Asegurarse de que el botón no sea None
-        btn.pack(pady=10)  # Empaquetar el botón
+    btn = insert_button(mode, i, pintor, img_url)  # Crea el botón
+    if btn is not None:  # Asegura que el botón se haya creado
+        btn.pack(pady=10)  # Empaqueta el botón en la ventana
     else:
-        print(f"Error: No se pudo crear el botón para {pintor}")
+        print(f"Error: No se pudo crear el botón para {pintor}")  # Mensaje de error
 
-# btn1 = tk.Button(root, text="Sidney Nolan", command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
-# btn1.pack(pady=10)
-# #btn1.place(x=100, y=50)
-# btn2 = tk.Button(root, text="Tom Roberts", command=lambda: abrir_ventana("Tom Roberts", "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
-# btn2.pack(pady=10)
-# #btn2.place(x=300, y=50)
-# btn3 = tk.Button(root, text="Albert Namatjira", command=lambda: abrir_ventana("Albert Namatjira", "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
-# btn3.pack(pady=10)
-# #btn3.place(x=500, y=50)
-
-# # Botón de salida, inicialmente deshabilitado
+# Botón de salida, inicialmente deshabilitado
 btn_exit = tk.Button(root, text="Salir", command=confirmar_salida, state="disabled", bg="white", fg="black", font=("Arial", 12, "bold"))
-btn_exit.pack(pady=10)
-#btn_exit.place(x=300, y=120)
+btn_exit.pack(pady=10)  # Agrega el botón de salida
 
-root.mainloop()
+root.mainloop()  # Inicia el bucle principal de la interfaz gráfica
