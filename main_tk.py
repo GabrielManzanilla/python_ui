@@ -142,4 +142,4 @@ btn_exit = tk.Button(root, text="Salir", command=confirmar_salida, state="disabl
 btn_exit.pack(pady=10)
 #btn_exit.place(x=300, y=120)
 
-root.mainloop()
+root.mainloop() #AWADEUWUDERUSS
