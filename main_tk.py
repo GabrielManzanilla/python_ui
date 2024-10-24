@@ -91,8 +91,8 @@ def insert_button(type_button, value, nombre_pintor, img_url):
 
 root = tk.Tk()
 root.title("7SA_Equipo#2_Gamboa_Manzanilla_Pérez_Pérez")
-root.maxsize(700, 500)
-root.minsize(700, 500)
+# root.maxsize(700, 500)
+# root.minsize(700, 500)
 root.resizable(width=False, height=False)
 root.geometry("700x500+{}+{}".format(
     (root.winfo_screenwidth() - 700) // 2, (root.winfo_screenheight() - 500) // 2))
@@ -144,4 +144,4 @@ btn_exit = tk.Button(root, text="Salir", command=confirmar_salida, state="disabl
 btn_exit.pack(pady=10)
 #btn_exit.place(x=300, y=120)
 
-root.mainloop() #AWADEUWUDERUSS
+root.mainloop()
