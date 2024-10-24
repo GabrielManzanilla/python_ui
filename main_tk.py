@@ -104,7 +104,7 @@ root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # The code snippet you provided is setting the `mode` variable to `"check"`, which indicates the mode
 # of the buttons to be created.
-mode = "check" #modo de los botones
+mode = "radio" #modo de los botones
 if mode == "check":
     option_vars = [tk.IntVar() for _ in range(3)]  
 elif mode == "radio":
@@ -114,30 +114,30 @@ elif mode == "radio":
 # The commented code block you provided is a loop that iterates over a list of painters' names
 # ("Sidney Nolan", "Tom Roberts", "Albert Namatjira") using the `enumerate` function with a starting
 # index of 1.
-# for i, pintor in enumerate(["Sidney Nolan", "Tom Roberts", "Albert Namatjira"], start=1):
-#     img_url = [
-#         "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg",
-#         "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg",
-#         "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"
-#     ][i - 1]  # URL de la imagen correspondiente
+for i, pintor in enumerate(["Sidney Nolan", "Tom Roberts", "Albert Namatjira"], start=1):
+    img_url = [
+        "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg",
+        "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg",
+        "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"
+    ][i - 1]  # URL de la imagen correspondiente
 
-#     btn = insert_button(mode, i, pintor, img_url)
-#     if btn is not None:  # Asegurarse de que el botón no sea None
-#         btn.pack(pady=10)  # Empaquetar el botón
-#     else:
-#         print(f"Error: No se pudo crear el botón para {pintor}")
+    btn = insert_button(mode, i, pintor, img_url)
+    if btn is not None:  # Asegurarse de que el botón no sea None
+        btn.pack(pady=10)  # Empaquetar el botón
+    else:
+        print(f"Error: No se pudo crear el botón para {pintor}")
 
-btn1 = tk.Button(root, text="Sidney Nolan", command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
-btn1.pack(pady=10)
-#btn1.place(x=100, y=50)
-btn2 = tk.Button(root, text="Tom Roberts", command=lambda: abrir_ventana("Tom Roberts", "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
-btn2.pack(pady=10)
-#btn2.place(x=300, y=50)
-btn3 = tk.Button(root, text="Albert Namatjira", command=lambda: abrir_ventana("Albert Namatjira", "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
-btn3.pack(pady=10)
-#btn3.place(x=500, y=50)
+# btn1 = tk.Button(root, text="Sidney Nolan", command=lambda: abrir_ventana("Sidney Nolan", "https://uploads3.wikiart.org/images/sidney-nolan/armoured-helmet-1956.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
+# btn1.pack(pady=10)
+# #btn1.place(x=100, y=50)
+# btn2 = tk.Button(root, text="Tom Roberts", command=lambda: abrir_ventana("Tom Roberts", "https://uploads6.wikiart.org/images/tom-roberts/lady-with-a-parasol-1893.jpg!HD.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
+# btn2.pack(pady=10)
+# #btn2.place(x=300, y=50)
+# btn3 = tk.Button(root, text="Albert Namatjira", command=lambda: abrir_ventana("Albert Namatjira", "https://amuraworld.com/images/articles/141-australia/102-albert-namatjira/103-namatjira1.jpg"), bg="white", fg="black", font=("Arial", 12, "bold"))
+# btn3.pack(pady=10)
+# #btn3.place(x=500, y=50)
 
-# Botón de salida, inicialmente deshabilitado
+# # Botón de salida, inicialmente deshabilitado
 btn_exit = tk.Button(root, text="Salir", command=confirmar_salida, state="disabled", bg="white", fg="black", font=("Arial", 12, "bold"))
 btn_exit.pack(pady=10)
 #btn_exit.place(x=300, y=120)
