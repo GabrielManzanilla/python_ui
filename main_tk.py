@@ -91,6 +91,8 @@ def insert_button(type_button, value, nombre_pintor, img_url):
 
 root = tk.Tk()
 root.title("7SA_Equipo#2_Gamboa_Manzanilla_Pérez_Pérez")
+root.maxsize(700, 500)
+root.minsize(700, 500)
 root.resizable(width=False, height=False)
 root.geometry("700x500+{}+{}".format(
     (root.winfo_screenwidth() - 700) // 2, (root.winfo_screenheight() - 500) // 2))
